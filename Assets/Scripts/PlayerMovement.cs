@@ -4,7 +4,7 @@
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float _velocity = 30f;
+    private float _velocity = 48f;
     private float _horizontalMovement;
 
     private bool _isJumping;
@@ -18,16 +18,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _horizontalMovement = Input.GetAxisRaw("Horizontal") * _velocity;
-        if (Input.GetButtonDown("Jump"))
-        {
-            _isJumping = true;
-        }
+        CommandsPlayer();
     }
 
     private void FixedUpdate()
     {
         _control.Movement(_horizontalMovement * Time.fixedDeltaTime, _isJumping);
         _isJumping = false;
+    }
+
+    void CommandsPlayer()
+    {
+        _horizontalMovement = Input.GetAxisRaw("Horizontal") * _velocity;
+        if (Input.GetButtonDown("Jump"))
+        {
+            _isJumping = true;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            _control.Shot();
+        }
     }
 }

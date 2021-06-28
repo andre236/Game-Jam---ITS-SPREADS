@@ -1,16 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 public class Controller2D : MonoBehaviour
 {
     [SerializeField]
-    private float _jumpForce = 200f;
+    private float _jumpForce = 800f;
     private float _smoothMovement = 0.05f;
     private float _radiusToGround = 0.3f;
+    private float _cooldownToShot = 2f;
 
     private bool _airControl = true;
     private bool _isOnGround;
+    private bool _canShot = true;
 
     [SerializeField]
     private LayerMask _groundLayer;
@@ -18,12 +21,14 @@ public class Controller2D : MonoBehaviour
     private Transform _footPosition;
     private Rigidbody2D _rigidbody2D;
 
-    private GameManager _gameManager;
+    [SerializeField]
+    private GameObject _fireballPrefab;
+    private GameObject _aimToShotGO;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-
+        _aimToShotGO = GameObject.Find("SpitfireGun");
     }
 
     private void FixedUpdate()
@@ -60,11 +65,28 @@ public class Controller2D : MonoBehaviour
         _rigidbody2D.velocity = Vector2.SmoothDamp(_rigidbody2D.velocity, velocityPlayer, ref velocity, _smoothMovement);
     }
 
+    public void Shot()
+    {
+        if (_canShot)
+        {
+            _canShot = false;
+            Instantiate(_fireballPrefab, _aimToShotGO.transform.position, Quaternion.identity);
+            StartCoroutine("CooldownToShot");
+        }
+        
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Death"))
         {
             GameManager.Instance.RestartLevel();
         }
+    }
+
+    IEnumerator CooldownToShot()
+    {
+        yield return new WaitForSeconds(_cooldownToShot);
+        _canShot = true;
     }
 }
