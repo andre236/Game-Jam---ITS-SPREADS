@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    [SerializeField]
+
     private int _allPopcorns = 0;
     private bool _isOpenedDoor = false;
 

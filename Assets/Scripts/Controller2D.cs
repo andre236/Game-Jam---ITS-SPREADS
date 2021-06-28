@@ -18,10 +18,12 @@ public class Controller2D : MonoBehaviour
     private Transform _footPosition;
     private Rigidbody2D _rigidbody2D;
 
+    private GameManager _gameManager;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+
     }
 
     private void FixedUpdate()
