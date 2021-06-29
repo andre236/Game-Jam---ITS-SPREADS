@@ -6,7 +6,7 @@ using UnityEngine;
 public class Controller2D : MonoBehaviour
 {
     [SerializeField]
-    private float _jumpForce = 800f;
+    private float _jumpForce = 700f;
     private float _smoothMovement = 0.05f;
     private float _radiusToGround = 0.3f;
     private float _cooldownToShot = 2f;
