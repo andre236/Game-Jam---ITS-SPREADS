@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8144112639225277626}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 28.514, y: -4.279, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -5321656012994664542, guid: 7b3c10abf5523084e8c04b692c928c14,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -96,7 +96,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98fcf718629e36d4eb630e38d83e22fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allPopcorns: 0
   _doorClosedSprite: {fileID: -5321656012994664542, guid: 7b3c10abf5523084e8c04b692c928c14,
     type: 3}
   _doorOpenedSprite: {fileID: -324432620754629398, guid: 7b3c10abf5523084e8c04b692c928c14,

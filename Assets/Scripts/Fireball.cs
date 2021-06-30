@@ -36,11 +36,16 @@ public class Fireball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Firepit"))
         {
-            var firepitPos = collision.transform.position;
+            var firepitPos = new Vector2(collision.transform.position.x, collision.transform.position.y);
             var playerPos = _playerMovement.transform.position;
 
             _playerMovement.TradePositionPlayer(firepitPos);
             collision.transform.position = new Vector2(playerPos.x, playerPos.y);
+            Destroy(gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Waterbarrier"))
+        {
             Destroy(gameObject);
         }
     }

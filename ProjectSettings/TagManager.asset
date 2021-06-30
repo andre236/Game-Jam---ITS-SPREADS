@@ -9,6 +9,7 @@ TagManager:
   - Death
   - Firepit
   - Fireball
+  - Waterbarrier
   layers:
   - Default
   - TransparentFX

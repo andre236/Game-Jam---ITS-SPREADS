@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     void CommandsPlayer()
     {
         _horizontalMovement = Input.GetAxisRaw("Horizontal") * _velocity;
+
         if (Input.GetButtonDown("Jump"))
         {
             _isJumping = true;
@@ -47,21 +48,24 @@ public class PlayerMovement : MonoBehaviour
             _control.Shot();
         }
 
-        if (Input.GetKeyDown(KeyCode.A) && Input.GetKeyUp(KeyCode.D))
+        if (_horizontalMovement < 0)
         {
             _playerAnim.SetBool("IsRunning_L", true);
             _playerAnim.SetBool("IsRunning_R", false);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) && Input.GetKeyUp(KeyCode.A))
+           
+        } 
+        else if(_horizontalMovement > 0)
         {
             _playerAnim.SetBool("IsRunning_R", true);
             _playerAnim.SetBool("IsRunning_L", false);
-        }
-        else
+        } 
+        else if(_horizontalMovement == 0)
         {
             _playerAnim.SetBool("IsRunning_L", false);
             _playerAnim.SetBool("IsRunning_R", false);
         }
+       
+      
 
     }
 

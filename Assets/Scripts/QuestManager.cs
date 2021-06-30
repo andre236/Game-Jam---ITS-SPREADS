@@ -43,10 +43,7 @@ public class QuestManager : MonoBehaviour
         {
             Debug.Log("Você passou de fase!");
         }
-        else
-        {
-            Debug.Log("Ainda faltam algumas Pipocas");
-        }
+       
     }
 
 }
