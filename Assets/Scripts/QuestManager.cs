@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
 
-    private int _allPopcorns = 0;
+    private int _allLamps = 0;
     private bool _isOpenedDoor = false;
 
-    private GameObject[] _popcorns;
+    private GameObject[] _lamps;
     [SerializeField]
     private Sprite _doorClosedSprite, _doorOpenedSprite;
 
@@ -16,12 +14,12 @@ public class QuestManager : MonoBehaviour
 
     void Awake()
     {
-        _popcorns = GameObject.FindGameObjectsWithTag("Popcorn");
+        _lamps = GameObject.FindGameObjectsWithTag("Lamp");
     }
 
     public bool CheckOpen()
     {
-        if (_allPopcorns == _popcorns.Length)
+        if (_allLamps == _lamps.Length)
         {
             GetComponent<SpriteRenderer>().sprite = _doorOpenedSprite;
             return _isOpenedDoor = true;
@@ -34,14 +32,14 @@ public class QuestManager : MonoBehaviour
 
     public int AddExploded()
     {
-        return _allPopcorns++;
+        return _allLamps++;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player") && _isOpenedDoor)
         {
-            Debug.Log("Você passou de fase!");
+            GameManager.Instance.LoadNextLevelScene();
         }
        
     }

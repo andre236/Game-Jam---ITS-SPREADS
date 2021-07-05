@@ -36,9 +36,11 @@ public class PlayerMovement : MonoBehaviour
 
     void CommandsPlayer()
     {
+        var ArrowUpOrWbutton = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
         _horizontalMovement = Input.GetAxisRaw("Horizontal") * _velocity;
+        _playerAnim.SetBool("IsJumping", !_control.IsOnGround);
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") || ArrowUpOrWbutton)
         {
             _isJumping = true;
         }
@@ -50,19 +52,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (_horizontalMovement < 0)
         {
-            _playerAnim.SetBool("IsRunning_L", true);
-            _playerAnim.SetBool("IsRunning_R", false);
+            _playerAnim.SetBool("IsRunning", true);
+            GetComponent<SpriteRenderer>().flipX = false;
            
         } 
         else if(_horizontalMovement > 0)
         {
-            _playerAnim.SetBool("IsRunning_R", true);
-            _playerAnim.SetBool("IsRunning_L", false);
+            _playerAnim.SetBool("IsRunning", true);
+            GetComponent<SpriteRenderer>().flipX = true;
         } 
         else if(_horizontalMovement == 0)
         {
-            _playerAnim.SetBool("IsRunning_L", false);
-            _playerAnim.SetBool("IsRunning_R", false);
+            _playerAnim.SetBool("IsRunning", false);
         }
        
       

@@ -34,19 +34,15 @@ public class Fireball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Firepit"))
+        if (collision.gameObject.CompareTag("FireBox"))
         {
-            var firepitPos = new Vector2(collision.transform.position.x, collision.transform.position.y);
+            var fireBoxPos = new Vector2(collision.transform.position.x, collision.transform.position.y);
             var playerPos = _playerMovement.transform.position;
 
-            _playerMovement.TradePositionPlayer(firepitPos);
+            _playerMovement.TradePositionPlayer(fireBoxPos);
             collision.transform.position = new Vector2(playerPos.x, playerPos.y);
             Destroy(gameObject);
         }
 
-        if (collision.gameObject.CompareTag("Waterbarrier"))
-        {
-            Destroy(gameObject);
-        }
     }
 }

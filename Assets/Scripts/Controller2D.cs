@@ -12,57 +12,60 @@ public class Controller2D : MonoBehaviour
     private float _cooldownToShot = 2f;
 
     private bool _airControl = true;
-    private bool _isOnGround;
+
     private bool _canShot = true;
 
     [SerializeField]
     private LayerMask _groundLayer;
     [SerializeField]
     private Transform _footPosition;
-    private Rigidbody2D _rigidbody2D;
+    private Rigidbody2D _playerRB;
 
     [SerializeField]
     private GameObject _fireballPrefab;
     private GameObject _aimToShotGO;
 
+    public bool IsOnGround { get; private set; }
+
     private void Awake()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
+        _playerRB = GetComponent<Rigidbody2D>();
         _aimToShotGO = GameObject.Find("SpitfireGun");
     }
 
     private void FixedUpdate()
     {
-        _isOnGround = false;
+        IsOnGround = false;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(_footPosition.position, _radiusToGround, _groundLayer);
-        for(int i = 0; i < colliders.Length; i++)
+        for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
-                _isOnGround = true;
+                IsOnGround = true;
         }
+
     }
 
     public void Movement(float amountMovement, bool isJumping)
     {
-        if(_isOnGround || _airControl)
+        if (IsOnGround || _airControl)
         {
             ApplyMovement(amountMovement);
         }
 
-        if(_isOnGround && isJumping)
+        if (IsOnGround && isJumping)
         {
-            _isOnGround = false;
-            _rigidbody2D.AddForce(new Vector2(_rigidbody2D.position.x, _jumpForce));
+            IsOnGround = false;
+            _playerRB.AddForce(new Vector2(_playerRB.position.x, _jumpForce));
         }
     }
 
     private void ApplyMovement(float amountMovement)
     {
-        var velocityPlayer = new Vector2(amountMovement * 10, _rigidbody2D.velocity.y);
+        var velocityPlayer = new Vector2(amountMovement * 10, _playerRB.velocity.y);
 
         Vector2 velocity = Vector2.zero;
-        _rigidbody2D.velocity = Vector2.SmoothDamp(_rigidbody2D.velocity, velocityPlayer, ref velocity, _smoothMovement);
+        _playerRB.velocity = Vector2.SmoothDamp(_playerRB.velocity, velocityPlayer, ref velocity, _smoothMovement);
     }
 
     public void Shot()
@@ -70,15 +73,15 @@ public class Controller2D : MonoBehaviour
         if (_canShot)
         {
             _canShot = false;
-            Instantiate(_fireballPrefab, _aimToShotGO.transform.position, Quaternion.identity);
+            Instantiate(_fireballPrefab, _aimToShotGO.transform.position, _aimToShotGO.transform.rotation);
             StartCoroutine("CooldownToShot");
         }
-        
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Death"))
+        if (collision.gameObject.CompareTag("Death") && this.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.RestartLevel();
         }

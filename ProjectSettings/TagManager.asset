@@ -10,6 +10,13 @@ TagManager:
   - Firepit
   - Fireball
   - Waterbarrier
+  - BigPopcorn
+  - Snake
+  - Plataform
+  - Lamp
+  - FireBox
+  - BGM
+  - SFX
   layers:
   - Default
   - TransparentFX

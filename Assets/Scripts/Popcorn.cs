@@ -4,43 +4,20 @@ using UnityEngine;
 
 public class Popcorn : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite _defaultSprite, _explodedSprite;
-
-    private QuestManager _questManagerDoor;
-    public bool IsExploded { get; private set; } = false;
+    private Animator _popcornAnim;
 
     private void Awake()
     {
-        _questManagerDoor = GameObject.FindGameObjectWithTag("Door").GetComponent<QuestManager>();
+        _popcornAnim = GetComponent<Animator>();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && !IsExploded)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine("CooldownToExplode");
+            _popcornAnim.SetTrigger("Bursted");
+            //Reproduz o som
+            Destroy(gameObject, 3f);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.gameObject.CompareTag("Player") && !IsExploded)
-        {
-            StopCoroutine("CooldownToExplode");
-        }
-    }
-
-    IEnumerator CooldownToExplode()
-    {
-        yield return new WaitForSeconds(3);
-        if (!IsExploded)
-        {
-            IsExploded = true;
-            GetComponent<SpriteRenderer>().sprite = _explodedSprite;
-            _questManagerDoor.AddExploded();
-            _questManagerDoor.CheckOpen();
-        }
-    
     }
 }
